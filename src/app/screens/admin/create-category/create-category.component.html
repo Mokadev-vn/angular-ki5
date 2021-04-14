@@ -1,0 +1,32 @@
+<div class="container px-6 mx-auto grid">
+    <h2 class="item-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Add Category
+    </h2>
+
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <form action="" [formGroup]="cateForm" (ngSubmit)="onSubmit()">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                    Name Category
+                </span>
+                <input
+                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:bg-gray-700 focus:outline-none form-input"
+                    formControlName="name">
+                <div *ngIf="form.name.invalid && (form.name.dirty || form.name.touched)">
+
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.name.errors?.required">
+                        Name is required.
+                    </span>
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.name.errors?.minlength">
+                        Name must be at least 4 characters long.
+                    </span>
+                </div>
+            </label>
+            <div class="text-center justify-end">
+                <button class="mt-4 px-4 py-2 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" [disabled]="cateForm.invalid">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

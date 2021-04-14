@@ -1,0 +1,17 @@
+<div class="row m-3">
+    <h2 class="h2 d-inline-block mb-0">{{name}}</h2>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let item of listComic">
+        <div class="card h-100">
+            <a href="#"><img class="card-img-top img-thumbnail" style="height: 250px" [src]="item.image" alt=""></a>
+            <div class="card-body text-center">
+                <h2 class="card-title">
+                    <a [routerLink]="'/comic/'+item.id" class="h4">{{item.title}}</a>
+                </h2>
+                <h5>Category: <span class="badge badge-info">{{name}}</span></h5>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+</div>

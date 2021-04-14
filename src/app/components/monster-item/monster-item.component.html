@@ -1,0 +1,9 @@
+<img [src]="monster.image" class="img-thumbnail">
+<p class="text-center"><strong>{{monster.name}}</strong></p>
+<p>{{ monster.description }}</p>
+<p>
+    <span *ngIf="monster.magic && monster.magic.length > 0">Magic: </span>
+    <span *ngFor="let mg of monster.magic" class="badge text-white bg-warning">{{ mg.icon + ' ' + mg.name }}</span>
+</p>
+<button class="btn btn-danger" (click)="removeMonster()">Xóa</button>
+<button class="btn btn-info" (click)="updateMonster()">Sửa</button>

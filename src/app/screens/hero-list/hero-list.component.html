@@ -1,0 +1,54 @@
+<div class="container">
+    <!-- <p [innerHTML]="detail"></p> -->
+    <div class="row">
+        <div class="col-6">
+            <form (submit)="submitForm($event)" action="">
+                <div class="form-group">
+                    <label for="">Hero ID</label>
+                    <input type="text" class="form-control" 
+                      (change)="updateFormObjectAttribute('id', $event)"
+                      [value]="formObject.id" name="id">
+                </div>
+                <div class="form-group">
+                    <label for="">Hero Name</label>
+                    <input type="text" class="form-control"
+                    (change)="updateFormObjectAttribute('name', $event)"
+                      [value]="formObject.name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="">Image</label>
+                    <input type="text" class="form-control"
+                    (change)="updateFormObjectAttribute('img', $event)"
+                      [value]="formObject.img" name="image">
+                </div>
+                <div class="form-check" *ngFor="let skill of templateSkills">
+                  <input class="form-check-input" 
+                    (click)="updateFormObjectSkill(skill, $event)" 
+                    [checked]="checkSkill(skill.id)" 
+                    [value]="skill.id"
+                    name="skills[]"
+                    type="checkbox" id="skill-{{skill.id}}">
+                  <label class="form-check-label" for="skill-{{skill.id}}">
+                    {{skill.name}}
+                  </label>
+                </div>
+                <div>
+                    <button class="btn btn-success" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-4" *ngFor="let hero of heroes">
+            <img [src]="hero.img" class="img-thumbnail">
+            <p><strong>{{hero.name}}</strong></p>
+            <p *ngIf="hero.skills != undefined && hero.skills.length > 0">Skills: </p>
+            <p>
+                <span *ngFor="let ski of hero.skills" class="badge text-white bg-warning">{{ski.name}}</span>
+            </p>
+            <button class="btn  btn-danger" (click)="removeHero(hero)">Xóa</button> 
+            <button class="btn  btn-info" (click)="updateHero(hero)">Sửa</button>
+        </div>
+    </div>
+</div>

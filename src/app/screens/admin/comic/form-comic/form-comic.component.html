@@ -1,0 +1,89 @@
+<div class="container px-6 mx-auto grid">
+    <h2 class="item-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Comic
+    </h2>
+
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <form action="" [formGroup]="comicForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                    Title
+                </span>
+                <input
+                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:bg-gray-700 focus:outline-none form-input"
+                    formControlName="title">
+                <div *ngIf="form.title.invalid && (form.title.dirty || form.title.touched)">
+
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.title.errors?.required">
+                        Title is required.
+                    </span>
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.title.errors?.minlength">
+                        Title must be at least 4 characters long.
+                    </span>
+                </div>
+            </label>
+            <label class="block text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                    Image
+                </span>
+                <input
+                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:bg-gray-700 focus:outline-none form-input"
+                    id="image" type="file" multiple (change)="selectFile($event)">
+            </label>
+
+            <label class="block text-sm mt-4" *ngIf="oldImage">
+                <span class="text-gray-700 dark:text-gray-400">
+                    Image Old
+                </span>
+                <img [src]="oldImage" alt="" class="object-fill w-auto" style="height: 150px;">
+            </label>
+
+            <label class="block mt-4 text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Category
+                </span>
+                <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" formControlName="cate_id">
+                  <option *ngFor="let cate of listCate" [value]="cate.id">{{cate.name}}</option>
+                </select>
+                <div *ngIf="form.cate_id.invalid && (form.cate_id.dirty || form.cate_id.touched)">
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.cate_id.errors?.required">
+                        Category is required.
+                    </span>
+                </div>
+            </label>
+            <label class="block mt-4 text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Author
+                </span>
+                <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" formControlName="author_id">
+                  <option *ngFor="let author of listAuthor" [value]="author.id">{{author.name}}</option>
+                </select>
+                <div *ngIf="form.author_id.invalid && (form.author_id.dirty || form.author_id.touched)">
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.author_id.errors?.required">
+                        Author is required.
+                    </span>
+                </div>
+            </label>
+            <label class="block mt-4 text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Status
+                </span>
+                <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" formControlName="status">
+                  <option value="1">Đã Hoàn Thành</option>
+                  <option value="2">Chưa Hoàn Thành</option>
+                </select>
+                <div *ngIf="form.status.invalid && (form.status.dirty || form.status.touched)">
+                    <span class="text-xs text-red-600 dark:text-red-400" *ngIf="form.status.errors?.required">
+                        Status is required.
+                    </span>
+                </div>
+            </label>
+            
+            <div class="text-center justify-end">
+                <button class="mt-4 px-4 py-2 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" [disabled]="comicForm.invalid">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

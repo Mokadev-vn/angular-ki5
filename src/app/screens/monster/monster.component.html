@@ -1,0 +1,10 @@
+<div class="container">
+    <form-monster [formData]="formObject" (save)="saveData($event)"></form-monster>
+    <hr>
+    <div class="row">
+      <div class="col-3" *ngFor="let monster of monsters">
+        <monster-item [monster]="monster" (update)="updateMonster($event)" (remove)="removeMonster($event)"></monster-item>
+      </div>
+    </div>
+    <hr>
+</div>
