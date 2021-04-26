@@ -1,0 +1,48 @@
+<div class="container px-6 mx-auto grid">
+    <div class="flex justify-between">
+        <h2 class="flex item-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Author
+        </h2>
+        <a routerLink="create"
+            class="my-6 items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Add Author
+        </a>
+    </div>
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr
+                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        <th class="px-4 py-3">#</th>
+                        <th class="px-4 py-3">Name <i class="fas fa-sort-amount-up-alt sort" (click)="sortData($event, 'name')"></i></th>
+                        <th class="px-4 py-3">Number of comic <i class="fas fa-sort-amount-up-alt sort" (click)="sortData($event, 'comics')"></i></th>
+                        <th class="px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tr class="text-gray-700 dark:text-gray-400" *ngFor="let author of authors; index as i">
+                        <td class="px-4 py-3 text-sm">
+                            {{i+1}}
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{author.name}}
+                        </td>
+                        <td class="px-4 py-3 text-xs">
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                {{author.comics}}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <a [routerLink]="'/admin/author/edit/'+author.id"
+                                class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Sửa</a>
+                            | <a class="px-3 py-1 text-sm cursor-pointer font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
+                                (click)="delete($event, author.id)">Xóa</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
