@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommicsService } from 'src/app/services/commics.service';
 import { Comic } from 'src/app/models/Comic'
-import { sort } from 'src/app/ultis/sort'
+import { paginate } from 'src/app/ultis/paginate'
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { environment as env} from 'src/environments/environment';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -13,6 +14,10 @@ import Swal from 'sweetalert2'
 export class ListComicComponent implements OnInit {
 
   comics: Comic[] = [];
+  response: any;
+  paginateData: any = [];
+  dataParam: any = {};
+  baseUrl = env.API_MEDIA;
   constructor(private comicService: CommicsService, private sharedService: SharedServiceService) {
     sharedService.toggle$.subscribe(async data => {
       this.comics = await comicService.search({
@@ -23,7 +28,9 @@ export class ListComicComponent implements OnInit {
     })
   }
   async ngOnInit() {
-    this.comics = await this.comicService.getAll().toPromise()
+    this.response = await this.comicService.getAll().toPromise()
+    this.comics = this.response['data']
+    this.paginateData = paginate(this.response['links'])
   }
 
   async delete(e: any, id: any) {
@@ -49,22 +56,39 @@ export class ListComicComponent implements OnInit {
     })
   }
 
-  sortData(e: any, field: string) {
+  async sortData(e: any, field: string) {
     let type = e.target.getAttribute('sort')
     // asc: tăng fa-sort-amount-up-alt and desc: giảm fa-sort-amount-down-alt
+    delete this.dataParam.title
+    delete this.dataParam.author
+    delete this.dataParam.category
+    delete this.dataParam.status
+    delete this.dataParam.views
+
+    this.dataParam[field] = !type ? 'asc' : type;
+
+    this.response = await this.comicService.getAll(this.dataParam).toPromise()
+    this.comics = this.response['data']
+    this.paginateData = paginate(this.response['links'])
 
     if (!type || type == 'asc') {
-      this.comics = sort(this.comics, field)
       e.target.classList.remove("fa-sort-amount-up-alt");
       e.target.classList.add("fa-sort-amount-down-alt");
       e.target.setAttribute('sort', 'desc')
       return
     }
 
-    this.comics = sort(this.comics, field, 2)
     e.target.classList.remove("fa-sort-amount-down-alt");
     e.target.classList.add("fa-sort-amount-up-alt");
     e.target.setAttribute('sort', 'asc')
+  }
+
+  async paginated(e: any, id: any) {
+    e.preventDefault()
+    this.dataParam.page = id;
+    this.response = await this.comicService.getAll(this.dataParam).toPromise();
+    this.comics = this.response['data']
+    this.paginateData = paginate(this.response['links'])
   }
 
 

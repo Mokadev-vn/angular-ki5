@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { CommicsService } from 'src/app/services/commics.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { AuthorService } from 'src/app/services/author.service';
+import { environment as env} from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-comic',
@@ -19,6 +20,7 @@ export class FormComicComponent implements OnInit {
   listAuthor: any;
   image: any;
   oldImage: any;
+  baseUrl = env.API_MEDIA;
 
   constructor(private comicService: CommicsService, private categoryService: CategoryService, private authorService: AuthorService,
     private router: Router, private route: ActivatedRoute) {

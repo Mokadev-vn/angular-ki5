@@ -3,8 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   API: "http://localhost:8000/api",
+  API_MEDIA: "http://localhost:8000/",
+  // API: "https://laravel.mokadev.asia/api",
 };
 
 /*

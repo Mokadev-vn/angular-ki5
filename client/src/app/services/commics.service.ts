@@ -10,8 +10,8 @@ export class CommicsService {
 
   private API_URL = env.API+'/comic'
   constructor(private http: HttpClient) { }
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.API_URL)
+  getAll(params: any = {}): Observable<any> {
+    return this.http.get<any>(this.API_URL, {params})
   }
 
   add(data: any): Observable<any>{

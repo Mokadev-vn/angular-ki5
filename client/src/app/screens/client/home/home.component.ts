@@ -1,6 +1,6 @@
-import { CommicsService } from 'src/app/services/commics.service';
 import { Component, OnInit } from '@angular/core';
-
+import { VisiterService } from 'src/app/services/visiter.service';
+import { environment as env} from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   listComic: any;
-  constructor(private comicService: CommicsService) { }
+  baseUrl = env.API_MEDIA;
+  
+  constructor(private visiterService: VisiterService) { }
 
   async ngOnInit(){
-    this.listComic = await this.comicService.getAll().toPromise()
+    this.listComic = await this.visiterService.getAllComic().toPromise()
   }
 
 }

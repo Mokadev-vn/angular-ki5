@@ -31,7 +31,7 @@
                         <td class="px-4 py-3 text-sm">
                             <div class="flex items-center text-sm">
                                 <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                  <img class="object-cover w-full h-full rounded-full" [src]="comic.image" alt="" loading="lazy">
+                                  <img class="object-cover w-full h-full rounded-full" [src]="baseUrl+comic.image" alt="" loading="lazy">
                                   <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                 </div>
                                 <div>
@@ -61,6 +61,17 @@
                 </tbody>
             </table>
         </div>
+        <div class="py-2">
+            <nav class="block">
+              <ul class="flex pl-0 rounded list-none flex-wrap">
+                <li *ngFor="let item of paginateData">
+                  <a href="#" class="first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-pink-500 bg-white text-pink-500" [class.active]="item.active" (click)="paginated($event, item.link)">
+                    {{item.label}}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         <div
             class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
         </div>

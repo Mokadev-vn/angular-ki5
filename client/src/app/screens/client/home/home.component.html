@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 mb-4" *ngFor="let item of listComic">
         <div class="card h-100">
-            <a href="#"><img class="card-img-top img-thumbnail" style="height: 250px" [src]="item.image" alt=""></a>
+            <a href="#"><img class="card-img-top img-thumbnail" style="height: 250px" [src]="baseUrl+item.image" alt=""></a>
             <div class="card-body text-center">
                 <h2 class="card-title">
                     <a [routerLink]="'/comic/'+item.id" class="h4">{{item.title}}</a>

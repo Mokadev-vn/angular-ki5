@@ -10,8 +10,10 @@ use Validator;
 
 class ComicController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth:api',['except' => ['index','show']]);
+    public function __construct()
+    {
+        // $this->middleware('auth:api', ['except' => ['index', 'show']]);
+        $this->middleware('auth:api');
     }
 
     /**
@@ -19,10 +21,30 @@ class ComicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $data = Comics::all();
-        $data = Comics::addSelect(['author' => Authors::select('name')->whereColumn('author_id', 'authors.id'), 'category' => Categories::select('name')->whereColumn('cate_id', 'categories.id')])->get();
+        $comic = Comics::addSelect(['author' => Authors::select('name')->whereColumn('author_id', 'authors.id'), 'category' => Categories::select('name')->whereColumn('cate_id', 'categories.id')]);
+        if($request->has('title')){
+            $comic->orderBy('title', $request->title);
+        }
+        if($request->has('title')){
+            $comic->orderBy('title', $request->title);
+        }
+        if($request->has('author')){
+            $comic->orderBy('author_id', $request->author);
+        }
+        if($request->has('category')){
+            $comic->orderBy('cate_id', $request->category);
+        }
+        if($request->has('status')){
+            $comic->orderBy('status', $request->status);
+        }
+        if($request->has('views')){
+            $comic->orderBy('views', $request->views);
+        }
+        $data = $comic->paginate(5);
+        
         return response()->json($data);
     }
 
@@ -58,9 +80,9 @@ class ComicController extends Controller
 
         $image = time() . '.' . $request->image->extension();
 
-        $request->image->move(public_path('images'), $image);
+        $request->image->move(storage_path('app/public/images'), $image);
 
-        $urlImage = url('/') . '/images/' . $image;
+        $urlImage = 'storage/images/' . $image;
 
         $data = Comics::Create(array_merge(
             $validator->validated(),
@@ -83,9 +105,6 @@ class ComicController extends Controller
     public function show($id)
     {
         $data = Comics::addSelect(['author' => Authors::select('name')->whereColumn('author_id', 'authors.id'), 'category' => Categories::select('name')->whereColumn('cate_id', 'categories.id')])->where('id', $id)->get();
-        $view = $data->toArray()[0]['views'];
-        $view += 1;
-        Comics::where('id', $id)->update(['views' => $view]);
         return response()->json($data);
     }
 
@@ -125,8 +144,8 @@ class ComicController extends Controller
 
         if (isset($validator->validated()['image'])) {
             $image = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $image);
-            $urlImage = url('/') . '/images/' . $image;
+            $request->image->move(storage_path('app/public/images'), $image);
+            $urlImage = 'storage/images/' . $image;
             $firstData['image'] = $urlImage;
         }
 

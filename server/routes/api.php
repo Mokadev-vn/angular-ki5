@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\AuthorsController;
 use App\Http\Controllers\HelperController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,7 +34,7 @@ Route::group([
     Route::post('/infoUser', [AuthController::class, 'userProfile']);
 });
 
-Route::post('/search', [HelperController::class, 'search'])->middleware('auth:api');
+Route::post('search', [HelperController::class, 'search'])->middleware('auth:api');
 
 Route::resource('category', CategoryController::class)->except([
     'create', 'edit'
@@ -47,3 +47,10 @@ Route::resource('comic', ComicController::class)->except([
 Route::resource('author', AuthorsController::class)->except([
     'create', 'edit'
 ]);
+
+Route::group(['prefix' => 'visiter'], function () {
+    Route::get('category', [HomeController::class, 'getAllCategory']);
+    Route::get('category/{id}', [HomeController::class, 'getOneCategory']);
+    Route::get('comic', [HomeController::class, 'getAllComic']);
+    Route::get('comic/{id}', [HomeController::class, 'getOneComic']);
+});

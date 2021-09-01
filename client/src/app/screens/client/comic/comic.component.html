@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 text-center">
-        <img [src]="data?.image" class="img-thumbnail" style="height: auto; max-height: 400px;">
+        <img [src]="baseUrl+data?.image" class="img-thumbnail" style="height: auto; max-height: 400px;">
     </div>
     <div class="col-md-6">
         <h2 class="h2">{{data?.title}}</h2>
@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 mb-4" *ngFor="let item of listComics?.comics">
         <div class="card h-100">
-            <a href="#"><img class="card-img-top img-thumbnail" style="height: 250px" [src]="item.image" alt=""></a>
+            <a href="#"><img class="card-img-top img-thumbnail" style="height: 250px" [src]="baseUrl+item.image" alt=""></a>
             <div class="card-body text-center">
                 <h2 class="card-title">
                     <a [routerLink]="['/comic', item.id]" class="h4">{{item.title}}</a>
